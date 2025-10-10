@@ -2478,6 +2478,6 @@ found and reported 0 problems.
 
 Warnings: 5 unique messages, 5 total
 End of script. Logfile hash: 1233d8d228
-CPU: user 0.78s system 0.02s, MEM: 22.61 MB total, 16.88 MB resident
+CPU: user 0.79s system 0.02s, MEM: 22.61 MB total, 16.72 MB resident
 Yosys 0.9 (git sha1 1979e0b)
-Time spent: 22% 18x opt_clean (0 sec), 19% 16x opt_expr (0 sec), ...
+Time spent: 21% 18x opt_clean (0 sec), 19% 16x opt_expr (0 sec), ...

@@ -58,5 +58,5 @@ if __name__ == "__main__":
     start, end, duration = parse_busy_out_duration(vcd_file)
     print(f"AES encryption start: {start}")
     print(f"AES encryption end: {end}")
-    print(f"AES total encryption time: {duration}")
+    print(f"AES total encryption time: {duration} ns")
     print(f"AES total clock cycles: {duration/10000}")

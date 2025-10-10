@@ -6,7 +6,7 @@ shift
 DUT_FILES="$@"
 
 echo "Running simulation for $TB_MODULE..."
-# Compile all DUT files + testbench
+# Compile all files + testbench
 iverilog -o sim_out $DUT_FILES
 SIM_STATUS=$?
 if [ $SIM_STATUS -ne 0 ]; then

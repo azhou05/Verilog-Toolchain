@@ -9,14 +9,14 @@ fi
 
 echo "=== Running full toolchain for $TB_MODULE ==="
 
-# Step 0: Detect DUT files (all .v except tb.v)
+# Step 0: Detect files (all .v except tb.v)
 DUT_FILES=$(ls src/*.v | grep -v tb.v)
 echo "Synthesis files: $DUT_FILES"
 
 # Step 1: Synthesis
 ./synth_check.sh aes $DUT_FILES
 
-# Step 2: Simulation (all DUT files + testbench)
+# Step 2: Simulation (all files + testbench)
 SIM_FILES="$DUT_FILES src/tb.v"
 ./simulate.sh $TB_MODULE $SIM_FILES
 
