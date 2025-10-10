@@ -24,7 +24,7 @@ verilog_toolchain/
 ├── run_all.sh           # Runs synthesis → simulation → VCD parsing end-to-end
 ├── run_pipeline.py      # Fully automated pipeline for multiple candidates
 ├── yosys_out.log        # Optional: log file from synthesis
-├── top.vcd              # Optional: waveform dump from simulation
+├── dump.vcd              # Optional: waveform dump from simulation
 └── README.md
 ```
 
