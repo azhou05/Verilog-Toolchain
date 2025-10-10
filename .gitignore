@@ -1,0 +1,32 @@
+# .gitignore for AES Verilog Toolchain Repository
+
+# Simulation outputs
+
+*.vcd
+*.vvp
+*.log
+
+# Python cache
+
+**pycache**/
+*.pyc
+
+# Temporary files
+
+*.bak
+*.tmp
+*~
+
+# Backup or swap files created by editors
+
+*.swp
+*.swo
+
+# Output directories (if any)
+
+outputs/
+
+# Optional: OS-specific files
+
+.DS_Store
+Thumbs.db

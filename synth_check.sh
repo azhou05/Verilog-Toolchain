@@ -1,18 +1,23 @@
 #!/bin/bash
-# Usage: ./synth_check.sh <top_module> <verilog_files...>
+# Usage: ./simulate.sh <tb_module> <verilog_files...> <tb_file>
 
-TOP_MODULE="$1"
+TB_MODULE="$1"
 shift
-VERILOG_FILES="$@"
+DUT_FILES="$@"
 
-echo "Running Yosys synthesis on $TOP_MODULE..."
-# Pipe output to terminal AND save to log
-yosys -p "read_verilog $VERILOG_FILES; synth -top $TOP_MODULE" 2>&1 | tee yosys_out.log
+echo "Running simulation for $TB_MODULE..."
+# Compile all files + testbench
+iverilog -o sim_out $DUT_FILES
+SIM_STATUS=$?
+if [ $SIM_STATUS -ne 0 ]; then
+    echo "Compilation failed!"
+    exit $SIM_STATUS
+fi
 
-# Check for errors in log
-if grep -q "ERROR:" yosys_out.log; then
-    echo "Synthesis failed! Check yosys_out.log above."
-    exit 1
-else
-    echo "Synthesis passed."
+# Run simulation and pipe output to terminal + log
+vvp sim_out 2>&1 | tee sim.log
+SIM_STATUS=${PIPESTATUS[0]}
+if [ $SIM_STATUS -ne 0 ]; then
+    echo "Simulation failed! See sim.log above."
+    exit $SIM_STATUS
 fi

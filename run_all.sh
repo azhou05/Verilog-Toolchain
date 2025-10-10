@@ -13,12 +13,20 @@ echo "=== Running full toolchain for $TB_MODULE ==="
 FILES=$(ls src/*.v | grep -v tb.v)
 echo "Synthesis files: $FILES"
 
-# Step 1: Synthesis
-./synth_check.sh aes $FILES
+continue_run = True;
 
-# Step 2: Simulation (all files + testbench)
+# Step 1: Synthesis check (all files + testbench)
 SIM_FILES="$FILES src/tb.v"
-./simulate.sh $TB_MODULE $SIM_FILES
+if ! ./synth_check.sh $TB_MODULE $SIM_FILES; then
+    echo "Simulation failed! Aborting."
+    exit 1
+fi
+
+# Step 2: Synthesis
+if ! ./synthesis.sh aes $FILES; then
+    echo "Synthesis failed! Aborting."
+    exit 1
+fi
 
 # Step 3: Python VCD analysis
 if [ -f dump.vcd ]; then

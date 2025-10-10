@@ -1,58 +1,45 @@
-module native_mixcolumns (
-    input  wire         clk,
-    input  wire         start_in,
-    input  wire [7:0]   data_in,     // input data
-    output wire [7:0]   data0_out,   // output data
-    output wire [7:0]   data1_out,   // output data
-    output wire [7:0]   data2_out,   // output data
-    output wire [7:0]   data3_out    // output data
+// mix_columns_parallel.v
+// Performs MixColumns on the entire 128-bit state combinationally.
+
+module mix_columns_parallel (
+    input  wire [127:0] data_in,
+    output wire [127:0] data_out
 );
 
-    // Function equivalent for scaling_2b
-    function [7:0] scaling_2b(input [7:0] a);
-        reg [7:0] z;
-        begin
-            z[7] = a[4] ^ a[2];
-            z[6] = a[7] ^ a[1];
-            z[5] = a[6] ^ a[3] ^ a[0];
-            z[4] = a[5] ^ a[4] ^ a[3];
-            z[3] = a[7] ^ a[5] ^ a[2] ^ a[0];
-            z[2] = a[7] ^ a[6] ^ a[4] ^ a[3] ^ a[1];
-            z[1] = a[7] ^ a[6] ^ a[5] ^ a[3] ^ a[2] ^ a[0];
-            z[0] = a[6] ^ a[4] ^ a[3] ^ a[1] ^ a[0];
-            scaling_2b = z;
-        end
+    // Helper function for Galois Field (GF(2^8)) multiplication by 2 (xtime)
+    function [7:0] xtime(input [7:0] b);
+        xtime = (b[7] == 1'b1) ? ((b << 1) ^ 8'h1B) : (b << 1);
     endfunction
 
-    // Internal signals
-    reg [7:0] accum_r [0:3];
-    wire [7:0] x;
-    wire [7:0] s2b;
-    wire [7:0] s2a;
+    genvar i;
+    generate
+        // Apply MixColumns transformation to each of the 4 columns
+        for (i = 0; i < 4; i = i + 1) begin : mix_column_instance
+            wire [7:0] in0, in1, in2, in3;
+            wire [7:0] out0, out1, out2, out3;
 
-    assign x    = data_in;
-    assign s2b  = scaling_2b(x);
-    assign s2a  = s2b ^ x;
+            // Extract the 4 bytes of the current column
+            assign in0 = data_in[(i*32) + 31 -: 8];
+            assign in1 = data_in[(i*32) + 23 -: 8];
+            assign in2 = data_in[(i*32) + 15 -: 8];
+            assign in3 = data_in[(i*32) +  7 -: 8];
 
-    // Sequential logic
-    always @(posedge clk) begin
-        if (start_in) begin
-            accum_r[0] <= x;
-            accum_r[1] <= x;
-            accum_r[2] <= s2a;
-            accum_r[3] <= s2b;
-        end else begin
-            accum_r[0] <= x    ^ accum_r[1];
-            accum_r[1] <= x    ^ accum_r[2];
-            accum_r[2] <= s2a  ^ accum_r[3];
-            accum_r[3] <= s2b  ^ accum_r[0];
+            // Perform the MixColumns matrix multiplication
+            // out0 = (2 * in0) + (3 * in1) + (1 * in2) + (1 * in3)
+            // out1 = (1 * in0) + (2 * in1) + (3 * in2) + (1 * in3)
+            // out2 = (1 * in0) + (1 * in1) + (2 * in2) + (3 * in3)
+            // out3 = (3 * in0) + (1 * in1) + (1 * in2) + (2 * in3)
+            assign out0 = xtime(in0) ^ (xtime(in1) ^ in1) ^ in2 ^ in3;
+            assign out1 = in0 ^ xtime(in1) ^ (xtime(in2) ^ in2) ^ in3;
+            assign out2 = in0 ^ in1 ^ xtime(in2) ^ (xtime(in3) ^ in3);
+            assign out3 = (xtime(in0) ^ in0) ^ in1 ^ in2 ^ xtime(in3);
+
+            // Assign the results to the output
+            assign data_out[(i*32) + 31 -: 8] = out0;
+            assign data_out[(i*32) + 23 -: 8] = out1;
+            assign data_out[(i*32) + 15 -: 8] = out2;
+            assign data_out[(i*32) +  7 -: 8] = out3;
         end
-    end
-
-    // Output assignments
-    assign data0_out = accum_r[0];
-    assign data1_out = accum_r[1];
-    assign data2_out = accum_r[2];
-    assign data3_out = accum_r[3];
+    endgenerate
 
 endmodule
