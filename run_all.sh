@@ -10,14 +10,14 @@ fi
 echo "=== Running full toolchain for $TB_MODULE ==="
 
 # Step 0: Detect files (all .v except tb.v)
-DUT_FILES=$(ls src/*.v | grep -v tb.v)
-echo "Synthesis files: $DUT_FILES"
+FILES=$(ls src/*.v | grep -v tb.v)
+echo "Synthesis files: $FILES"
 
 # Step 1: Synthesis
-./synth_check.sh aes $DUT_FILES
+./synth_check.sh aes $FILES
 
 # Step 2: Simulation (all files + testbench)
-SIM_FILES="$DUT_FILES src/tb.v"
+SIM_FILES="$FILES src/tb.v"
 ./simulate.sh $TB_MODULE $SIM_FILES
 
 # Step 3: Python VCD analysis
