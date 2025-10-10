@@ -1,6 +1,6 @@
 # Verilog Toolchain for AES-128
 
-This repository provides a complete **toolchain for testing, synthesizing, simulating, and analyzing Verilog modules**, demonstrated here with an AES-128 implementation. It is designed to be **used standalone** but in process to be used in combination with evolutionary tools like OpenEvolve.
+This repository provides a complete **toolchain for testing, synthesizing, simulating, and analyzing Verilog modules**, demonstrated here with an AES-128 implementation. It is designed to be **used standalone** but work is currently underway for it to be used in combination with evolutionary tools like OpenEvolve.
 
 ---
 
