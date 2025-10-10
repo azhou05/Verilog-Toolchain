@@ -22,8 +22,8 @@ verilog_toolchain/
 ├── synth_check.sh       # Check if Verilog files are synthesizable with Yosys
 ├── simulate.sh          # Run simulation with Icarus Verilog and generate dump.vcd
 ├── run_all.sh           # Runs synthesis → simulation → VCD parsing end-to-end
-├── yosys_out.log        # Optional: log file from synthesis
-├── dump.vcd              # Optional: waveform dump from simulation
+├── yosys_out.log        # Log file from synthesis
+├── dump.vcd             # Waveform dump from simulation
 └── README.md
 ```
 
