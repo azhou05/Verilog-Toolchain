@@ -94,6 +94,12 @@ The script will run all steps and generate a toolchain_results.json file. This f
         "status": "success",
         "log": "--- Log File (sim.log) ---\nVCD info: dumpfile top.vcd opened for output.\n2dc1e9df9d4089be86138b9221fb3391\n\n\n--- Captured STDOUT ---\nRunning simulation for aes_tb...\nVCD info: dumpfile top.vcd opened for output.\n2dc1e9df9d4089be86138b9221fb3391"
     },
+    "accuracy_check": {
+        "status": "success",
+        "expected_output": "2dc1e9df9d4089be86138b9221fb3391",
+        "found_output": "2dc1e9df9d4089be86138b9221fb3391",
+        "message": "Simulation output matches golden vector."
+    },
     "synthesis": {
         "return_code": 0,
         "status": "success",
