@@ -26,6 +26,10 @@
 
 outputs/
 
+# Json files
+
+*.json
+
 # Optional: OS-specific files
 
 .DS_Store

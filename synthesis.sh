@@ -1,5 +1,5 @@
 #!/bin/bash
-# Usage: ./synth_check.sh <top_module> <verilog_files...>
+# Usage: ./synthesis.sh <top_module> <verilog_files...>
 
 TOP_MODULE="$1"
 shift

@@ -19,9 +19,9 @@ verilog_toolchain/
 │   ├── bytepermutation.v
 │   └── par2ser.v
 ├── parse_vcd.py         # Python script to parse dump.vcd and calculate clock cycles
-├── synth_check.sh       # Check if Verilog files are synthesizable with Yosys
-├── simulate.sh          # Run simulation with Icarus Verilog and generate dump.vcd
-├── run_all.sh           # Runs synthesis → simulation → VCD parsing end-to-end
+├── synth_check.sh       # Run simulation with Icarus Verilog and generate dump.vcd
+├── synthesis.sh         # Check if Verilog files are synthesizable with Yosys
+├── run_toolchain.py     # Runs synthesis → simulation → VCD parsing end-to-end
 ├── yosys_out.log        # Log file from synthesis
 ├── dump.vcd             # Waveform dump from simulation
 └── README.md

@@ -1,7 +1,2 @@
-VCD info: dumpfile dump.vcd opened for output.
---------------------------------------------------
-AES Encryption Complete at time                35000
-Plaintext:  00112233445566778899aabbccddeeff
-Key:        000102030405060708090a0b0c0d0e0f
-Ciphertext: 00000000000000000000000000000000
---------------------------------------------------
+VCD info: dumpfile top.vcd opened for output.
+2dc1e9df9d4089be86138b9221fb3391

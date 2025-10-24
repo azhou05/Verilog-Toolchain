@@ -1,13 +1,15 @@
 #!/bin/bash
-# Usage: ./simulate.sh <tb_module> <verilog_files...> <tb_file>
+# Usage: ./synth_check.sh <tb_module> <verilog_files...> 
 
 TB_MODULE="$1"
 shift
-DUT_FILES="$@"
+# The rest of the arguments are all the verilog files including tb.v
+VERILOG_FILES="$@"
 
 echo "Running simulation for $TB_MODULE..."
 # Compile all files + testbench
-iverilog -o sim_out $DUT_FILES
+# ADD -I src to tell iverilog where to find included files
+iverilog -I src -o sim_out $VERILOG_FILES 
 SIM_STATUS=$?
 if [ $SIM_STATUS -ne 0 ]; then
     echo "Compilation failed!"
@@ -19,5 +21,10 @@ vvp sim_out 2>&1 | tee sim.log
 SIM_STATUS=${PIPESTATUS[0]}
 if [ $SIM_STATUS -ne 0 ]; then
     echo "Simulation failed! See sim.log above."
-    exit $SIM_STATUS
+    # Don't exit immediately on simulation failure in tb if return code is expected
+    # Let run_toolchain.py handle the exit code interpretation
+    # exit $SIM_STATUS 
 fi
+
+# Exit with the simulation status code (0 for success, non-zero for failure)
+exit $SIM_STATUS
