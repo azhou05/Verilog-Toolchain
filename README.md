@@ -46,7 +46,7 @@ verilog_toolchain/
 
 You only need to do this once:
 ```bash
-chmod +x run_toolchain.py synth_check.sh synthesis.sh parse_vcd.py
+chmod +x run_toolchain.py simulate.sh synthesis.sh parse_vcd.py
 ```
 
 ### 2. Run the full toolchain for a specific top module
