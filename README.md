@@ -47,8 +47,9 @@ verilog_toolchain/
 You only need to do this once:
 ```bash
 chmod +x run_toolchain.py synth_check.sh synthesis.sh parse_vcd.py
+```
 
-### 2. Run the full toolchain for a specific top module:
+### 2. Run the full toolchain for a specific top module
 
 Execute the master Python script. The only argument it needs is the name of your top-level testbench module (e.g., aes_tb).
 
