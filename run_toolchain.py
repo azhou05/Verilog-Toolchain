@@ -105,10 +105,10 @@ def main():
         print_err(f"Error finding Verilog files: {e}") # Use print_err
         sys.exit(1)
 
-    # --- Step 1: Simulation (using synth_check.sh or synth_check.sh) ---
+    # --- Step 1: Simulation (using simulate.sh or simulate.sh) ---
     # Determine which script runs simulation based on previous context
-    # Assuming synth_check.sh is the correct one now.
-    sim_script = "./synth_check.sh" # CHANGE THIS if synth_check.sh runs simulation
+    # Assuming simulate.sh is the correct one now.
+    sim_script = "./simulate.sh" # CHANGE THIS if simulate.sh runs simulation
     sim_log_file = "sim.log"
     sim_command = f"{sim_script} {tb_module} {tb_file}"
     output_data['simulation'] = run_step(sim_command, sim_log_file, "Simulation (iverilog)")
@@ -118,10 +118,10 @@ def main():
         write_json_output(output_data)
         sys.exit(1)
 
-    # --- Step 2: Synthesis (using synthesis.sh or synth_check.sh) ---
+    # --- Step 2: Synthesis (using synthesis.sh or simulate.sh) ---
     # Determine which script runs synthesis
     # Assuming synthesis.sh is the correct one now.
-    synth_script = "./synthesis.sh" # CHANGE THIS if synth_check.sh runs synthesis
+    synth_script = "./synthesis.sh" # CHANGE THIS if simulate.sh runs synthesis
     synth_log_file = "yosys_out.log"
     synth_command = f"{synth_script} {design_top_module} {dut_files_str}"
     output_data['synthesis'] = run_step(synth_command, synth_log_file, "Synthesis (Yosys)")
